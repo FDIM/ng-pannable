@@ -5,6 +5,7 @@
 # about
 
 > TODO
+example: http://fdim.github.io/ng-pannable/example/ 
 
 #LICENSE
 
