@@ -23,14 +23,22 @@
 
       var animatonFrameId;
       var touching  = false;
-      var grabCursor = '-webkit-grab';
-      var grabbingCursor = '-webkit-grabbing';
-
+      var grabCursor = 'all-scroll';
+      var grabbingCursor = 'all-scroll';
       var doc = angular.element(document);
       var pannableValidate = attr.pannableValidate;
       var body = angular.element(document.body || document.documentElement);
       attr.$observe(attr.pannable, watcher);
       watcher(attr.pannable);
+
+      if(/firefox/i.test(navigator.userAgent)){
+        grabCursor = '-moz-grab';
+        grabbingCursor = '-moz-grabbing';
+      }else if(/chrome/i.test(navigator.userAgent)){
+        grabCursor = '-webkit-grab';
+        grabbingCursor = '-webkit-grabbing';
+      }
+
 
       function watcher(value) {
         if($scope.$eval(value)!==false){
@@ -73,7 +81,7 @@
           vertical = false;
         }
         if(vertical || horizonal){
-          body.css({cursor: panning?grabbingCursor:grabCursor});
+          element.css({cursor: panning ? grabbingCursor : grabCursor});
           element.on('mousedown', mouseDown);
           element.on('mouseleave', mouseLeave);
         }else{
@@ -99,7 +107,7 @@
           cancelTimeout = setTimeout(mouseUp, cancelDelay);
           body.addClass('no-select');
 
-          body.css({cursor: grabbingCursor});
+          element.css({cursor: grabbingCursor});
           panning = true;
           lastPos.x = e.pageX;
           lastPos.y = e.pageY;
@@ -111,7 +119,7 @@
 
       function mouseUp(e) {
         body.removeClass('no-select');
-        body.css({cursor: grabCursor});
+        element.css({cursor: grabCursor});
         panning = false;
         doc.off('mouseup', mouseUp).off('mousemove', mouseMove);
         window.cancelAnimationFrame(animatonFrameId);
