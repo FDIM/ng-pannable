@@ -1,7 +1,7 @@
 {
-  "name": "ngModule",
+  "name": "ngPannable",
   "version": "1.0.0",
-  "main": "dist/ng-module.js",
+  "main": "dist/ng-pannable.js",
   "scripts": {
     "test": "gulp coverage"
   },
@@ -28,12 +28,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FDIM/ng-module.git"
+    "url": "https://github.com/FDIM/ng-pannable.git"
   },
   "author": "FDIM <domas.trijonis@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FDIM/ng-module/issues"
+    "url": "https://github.com/FDIM/ng-pannable/issues"
   },
-  "homepage": "https://github.com/FDIM/ng-module"
+  "homepage": "https://github.com/FDIM/ng-pannable"
 }

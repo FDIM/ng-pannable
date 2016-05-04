@@ -1,0 +1,66 @@
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js" type="text/javascript"></script>
+  <script src="../dist/ng-pannable.js" type="text/javascript"></script>
+  <style>
+    .container{
+      overflow: hidden;
+      width: 650px;
+      height: 300px;
+    }
+    .container:after{
+      content: ' ';
+      clear: both;
+      display: block;
+    }
+    .container .inner{
+      width: 2200px;
+    }
+    .container .item{
+      float: left;
+      width: 94px;
+      height: 294px;
+      margin: 2px;
+      border: 1px solid #ddd;
+    }
+    .no-select{
+      -webkit-user-select: none;  /* Chrome all / Safari all */
+      -moz-user-select: none;     /* Firefox all */
+      -ms-user-select: none;      /* IE 10+ */
+      user-select: none;          /* Likely future */
+    }
+  </style>
+</head>
+<body>
+  <div class="container" pannable="'true'">
+    <div class="inner">
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+      <div class="item">123456</div>
+    </div>
+  </div>
+
+  <script>
+    var app = angular.module('example', ['ngPannable'])
+    angular.bootstrap(document, ['example']);
+  </script>
+</body>
+</html>

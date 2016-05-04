@@ -1,11 +1,11 @@
 {
-  "name": "ngModule",
-  "main": "dist/ngModule.js",
-  "version": "1.0.",
-  "homepage": "https://github.com/FDIM/ng-module.git",
+  "name": "ngPannable",
+  "main": "dist/ng-module.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/FDIM/ng-pannable.git",
   "authors": ["FDIM <domas.trijonis@gmail.com>"],
-  "description": "desc",
-  "keywords": [],
+  "description": "Enables panning by clicking left mouse button and dragging within scrollable container",
+  "keywords": ["pannable","ng-pannable"],
   "license": "MIT",
   "ignore": [
     "**/.*",
