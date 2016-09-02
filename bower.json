@@ -1,7 +1,7 @@
 {
   "name": "ng-pannable",
-  "main": "dist/ng-module.js",
-  "version": "1.0.0",
+  "main": "dist/ng-pannable.js",
+  "version": "1.0.1",
   "homepage": "https://github.com/FDIM/ng-pannable.git",
   "authors": ["FDIM <domas.trijonis@gmail.com>"],
   "description": "Enables panning by clicking left mouse button and dragging within scrollable container",
