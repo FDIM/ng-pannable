@@ -1,9 +1,24 @@
-"use strict";
+(function (module) {
+  "use strict";
 
-;(function(module)
-{
-  module.directive('pannable', [function()
-  {
+  module.run(['pannableService', function (pannableService) {
+    var body = document.body || document.documentElement;
+    body.addEventListener('click', handleClick, true);
+
+    function handleClick(e) {
+      if (pannableService.cancelSubsequentClick) {
+        e.preventDefault();
+        pannableService.cancelSubsequentClick = false;
+        return false;
+      }
+    }
+  }]);
+
+  module.service('pannableService', function () {
+    this.cancelSubsequentClick = false;
+  });
+
+  module.directive('pannable', ['pannableService', function (pannableService) {
     return {
       link: link
     };
@@ -17,12 +32,12 @@
       var cancelTimeout;
 
       var panning = false;
-      var lastPos = {x: 0, y: 0};
-      var currentPos = {x: 0, y: 0};
-      var panOffset = {x:0, y:0};
+      var lastPos = { x: 0, y: 0 };
+      var currentPos = { x: 0, y: 0 };
+      var panOffset = { x: 0, y: 0 };
 
       var animatonFrameId;
-      var touching  = false;
+      var touching = false;
       var grabCursor = 'all-scroll';
       var grabbingCursor = 'all-scroll';
       var doc = angular.element(document);
@@ -31,19 +46,19 @@
       attr.$observe(attr.pannable, watcher);
       watcher(attr.pannable);
 
-      if(/firefox/i.test(navigator.userAgent)){
+      if (/firefox/i.test(navigator.userAgent)) {
         grabCursor = '-moz-grab';
         grabbingCursor = '-moz-grabbing';
-      }else if(/chrome/i.test(navigator.userAgent)){
+      } else if (/chrome/i.test(navigator.userAgent)) {
         grabCursor = '-webkit-grab';
         grabbingCursor = '-webkit-grabbing';
       }
 
 
       function watcher(value) {
-        if($scope.$eval(value)!==false){
+        if ($scope.$eval(value) !== false) {
           bind();
-        }else{
+        } else {
           unbind();
         }
       }
@@ -69,7 +84,7 @@
         element.off('touchend touchcancel', touchEnd);
       }
       function mouseEnter(e) {
-        if(touching){
+        if (touching) {
           return;
         }
         horizonal = true;
@@ -80,12 +95,12 @@
         if (element.prop('offsetHeight') >= element.prop('scrollHeight')) {
           vertical = false;
         }
-        if(vertical || horizonal){
-          element.css({cursor: panning ? grabbingCursor : grabCursor});
+        if (vertical || horizonal) {
+          element.css({ cursor: panning ? grabbingCursor : grabCursor });
           element.on('mousedown', mouseDown);
           element.on('mouseleave', mouseLeave);
-        }else{
-          element.css({cursor: ''});
+        } else {
+          element.css({ cursor: '' });
         }
       }
 
@@ -94,7 +109,7 @@
       }
 
       function mouseDown(e) {
-        if(touching){
+        if (touching) {
           return;
         }
         if (e.which != 1 && e.which != 2) {
@@ -103,11 +118,11 @@
         panOffset.x = panOffset.y = 0;
 
 
-        if(!pannableValidate || $scope.$eval(pannableValidate,{$event: e, $target: angular.element(e.target)})){
+        if (!pannableValidate || $scope.$eval(pannableValidate, { $event: e, $target: angular.element(e.target) })) {
           cancelTimeout = setTimeout(mouseUp, cancelDelay);
           body.addClass('no-select');
 
-          element.css({cursor: grabbingCursor});
+          element.css({ cursor: grabbingCursor });
           panning = true;
           lastPos.x = e.pageX;
           lastPos.y = e.pageY;
@@ -119,7 +134,7 @@
 
       function mouseUp(e) {
         body.removeClass('no-select');
-        element.css({cursor: grabCursor});
+        element.css({ cursor: grabCursor });
         panning = false;
         doc.off('mouseup', mouseUp).off('mousemove', mouseMove);
         window.cancelAnimationFrame(animatonFrameId);
@@ -132,32 +147,33 @@
 
         currentPos.x += lastPos.x - e.pageX;
         currentPos.y += lastPos.y - e.pageY;
-        panOffset.x +=lastPos.x - e.pageX;
+        panOffset.x += lastPos.x - e.pageX;
         panOffset.y += lastPos.y - e.pageY;
 
         lastPos.x = e.pageX;
         lastPos.y = e.pageY;
 
-        if(cancelTimeout && (Math.abs(panOffset.x) > cancelDelta || Math.abs(panOffset.y) > cancelDelta)){
+        if (cancelTimeout && (Math.abs(panOffset.x) > cancelDelta || Math.abs(panOffset.y) > cancelDelta)) {
           clearTimeout(cancelTimeout);
           cancelTimeout = undefined;
+          pannableService.cancelSubsequentClick = true;
         }
       }
 
       function updatePan() {
-      	if (!panning) {
-      		return;
-      	}
-      	if (vertical) {
-      		element.prop('scrollTop', element.prop('scrollTop') + currentPos.y);
-      	}
-      	if (horizonal) {
-      		element.prop('scrollLeft', element.prop('scrollLeft') + currentPos.x);
-      	}
-      	currentPos.x = 0;
-      	currentPos.y = 0;
+        if (!panning) {
+          return;
+        }
+        if (vertical) {
+          element.prop('scrollTop', element.prop('scrollTop') + currentPos.y);
+        }
+        if (horizonal) {
+          element.prop('scrollLeft', element.prop('scrollLeft') + currentPos.x);
+        }
+        currentPos.x = 0;
+        currentPos.y = 0;
         animatonFrameId = window.requestAnimationFrame(updatePan);
       }
     }
   }]);
-}(angular.module('ngPannable',[])))
+} (angular.module('ngPannable', [])))
