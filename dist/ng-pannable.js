@@ -176,4 +176,4 @@
       }
     }
   }]);
-} (angular.module('ngPannable', [])))
+} (angular.module('ngPannable', [])));
