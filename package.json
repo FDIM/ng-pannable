@@ -1,6 +1,6 @@
 {
   "name": "ng-pannable",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/ng-pannable.js",
   "scripts": {
     "test": "gulp coverage"

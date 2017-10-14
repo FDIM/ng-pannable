@@ -43,8 +43,7 @@
       var doc = angular.element(document);
       var pannableValidate = attr.pannableValidate;
       var body = angular.element(document.body || document.documentElement);
-      attr.$observe(attr.pannable, watcher);
-      watcher(attr.pannable);
+      $scope.$watch(attr.pannable, watcher);
 
       if (/firefox/i.test(navigator.userAgent)) {
         grabCursor = '-moz-grab';
@@ -56,7 +55,7 @@
 
 
       function watcher(value) {
-        if ($scope.$eval(value) !== false) {
+        if (value) {
           bind();
         } else {
           unbind();
@@ -69,6 +68,7 @@
       }
 
       function unbind() {
+		    element.css({ cursor: '' });
         element.off('mouseenter', mouseEnter);
         element.off('mousedown', mouseDown);
         element.off('touchend touchcancel', touchEnd);
